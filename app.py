@@ -3,18 +3,19 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+import os
 
 app = Flask(__name__)
-app.config["JWT_SECRET_KEY"] = "1234FinanceForage4321@"
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
+app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL')
 jwt = JWTManager(app)
 
-client = MongoClient("mongodb://localhost:27017")
-db = client['finance_gamification'] 
+client = MongoClient(app.config['DATABASE_URL'])
+db = client['financeforge']
 users_collection = db['users']
 progress_collection = db['progress']
 topics_collection = db['topics']
 subtopics_collection = db['subtopics']
-
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -225,5 +226,5 @@ def get_progress():
         }), 200
     return jsonify({"message": "User not found"}), 404
 
-
-
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
