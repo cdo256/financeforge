@@ -18,7 +18,7 @@
         };
       in {
         devShells.default = pkgs.mkShell {
-          packages = [ python.withPackages (ps: [ ps.flask ]) ];
+          packages = [ python.withPackages (ps: [ ps.flask ps.setuptools ]) ];
         };
 
         packages.default = pkgs.python3Packages.buildPythonApplication {
