@@ -10,18 +10,23 @@ app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
 app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL')
 jwt = JWTManager(app)
 
-client = MongoClient(app.config['DATABASE_URL'])
+database_url = app.config['DATABASE_URL']
+client = MongoClient(database_url)
 db = client['financeforge']
 users_collection = db['users']
 progress_collection = db['progress']
 topics_collection = db['topics']
 subtopics_collection = db['subtopics']
+print(f'Connecting to DB: {database_url}')
+print(db)
 
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
+
+    print(f'SIGNUP:\nusername: {username}\npassword: {password}')
 
     if users_collection.find_one({"username": username}):
         return jsonify({"message": "User already exists"}), 400
@@ -226,5 +231,8 @@ def get_progress():
         }), 200
     return jsonify({"message": "User not found"}), 404
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+def run():
+    app.run(host='0.0.0.0', port=81)
+
+if __name__ == "__main__":
+    run()
