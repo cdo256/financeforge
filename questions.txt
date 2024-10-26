@@ -1,0 +1,409 @@
+[
+    {
+        "background": "Mortgages in the UK can be structured with different repayment options, affecting overall cost.",
+        "question": "Which type of mortgage involves paying only interest each month without reducing the loan balance?",
+        "options": [
+            "A. Repayment mortgage",
+            "B. Fixed-rate mortgage",
+            "C. Interest-only mortgage",
+            "D. Discount mortgage"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! An interest-only mortgage involves paying only the interest, with the principal balance due later.",
+        "incorrect-message": "Incorrect. The correct answer is C. Interest-only mortgages require only interest payments each month."
+    },
+    {
+        "background": "Saving for retirement in the UK involves different account types with unique tax advantages.",
+        "question": "Which type of retirement savings account offers tax relief on contributions in the UK?",
+        "options": [
+            "A. Current account",
+            "B. Cash ISA",
+            "C. Lifetime ISA",
+            "D. Pension"
+        ],
+        "answer": "D",
+        "correct-message": "Correct! Pension contributions provide tax relief in the UK.",
+        "incorrect-message": "Incorrect. The correct answer is D. Pensions offer tax relief on contributions."
+    },
+    {
+        "background": "ISAs are popular in the UK for tax-free savings and investments.",
+        "question": "What is the maximum annual contribution for a UK ISA as of the latest tax year?",
+        "options": [
+            "A. £5,000",
+            "B. £10,000",
+            "C. £20,000",
+            "D. £25,000"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! The annual ISA limit is £20,000.",
+        "incorrect-message": "Incorrect. The correct answer is C. The current ISA contribution limit is £20,000."
+    },
+    {
+        "background": "Understanding credit inquiries helps in maintaining a healthy credit score.",
+        "question": "What is a 'soft' credit check?",
+        "options": [
+            "A. A credit check done by banks only",
+            "B. A check that does not impact your credit score",
+            "C. A check that raises your credit score",
+            "D. A check done for mortgage applications"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! A soft credit check does not impact your credit score.",
+        "incorrect-message": "Incorrect. The correct answer is B. Soft checks are inquiries that do not affect your score."
+    },
+    {
+        "background": "Understanding loan terminology helps borrowers make informed decisions.",
+        "question": "What does 'principal' refer to in a loan agreement?",
+        "options": [
+            "A. The interest portion of a loan",
+            "B. The original amount borrowed",
+            "C. The penalty for late payment",
+            "D. The monthly repayment amount"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! The principal is the original amount borrowed in a loan.",
+        "incorrect-message": "Incorrect. The correct answer is B. Principal refers to the initial loan amount."
+    },
+    {
+        "background": "UK credit scores are calculated by credit reference agencies.",
+        "question": "Which of the following is NOT a credit reference agency in the UK?",
+        "options": [
+            "A. Experian",
+            "B. Equifax",
+            "C. TransUnion",
+            "D. FICO"
+        ],
+        "answer": "D",
+        "correct-message": "Correct! FICO is not a credit reference agency; it’s a scoring model.",
+        "incorrect-message": "Incorrect. The correct answer is D. FICO is a scoring model, not a UK credit agency."
+    },
+    {
+        "background": "Managing debt responsibly is essential for financial health.",
+        "question": "Which type of debt is generally considered 'bad' debt?",
+        "options": [
+            "A. Mortgage",
+            "B. Student loan",
+            "C. Payday loan",
+            "D. Business loan"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! Payday loans are often considered bad debt due to high-interest rates.",
+        "incorrect-message": "Incorrect. The correct answer is C. Payday loans carry high-interest rates, making them risky debt."
+    },
+    {
+        "background": "Loan interest types can impact the total repayment amount.",
+        "question": "In a fixed-rate mortgage, how is the interest rate structured?",
+        "options": [
+            "A. It varies with market conditions",
+            "B. It is fixed for the entire term",
+            "C. It fluctuates monthly",
+            "D. It is fixed for an initial period then varies"
+        ],
+        "answer": "D",
+        "correct-message": "Correct! Fixed-rate mortgages often have a fixed rate initially, then vary after a set period.",
+        "incorrect-message": "Incorrect. The correct answer is D. Fixed-rate mortgages have an initial fixed period followed by a variable rate."
+    },
+    {
+        "background": "UK banks offer different types of savings accounts to meet various needs.",
+        "question": "Which account type allows withdrawals without penalties?",
+        "options": [
+            "A. Fixed-rate bond",
+            "B. Easy access savings account",
+            "C. Lifetime ISA",
+            "D. Current account"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! Easy access savings accounts allow withdrawals without penalties.",
+        "incorrect-message": "Incorrect. The correct answer is B. Easy access accounts permit withdrawals freely."
+    },
+    {
+        "background": "Credit limits are a feature of credit cards that can influence spending and credit utilization.",
+        "question": "How can exceeding your credit limit affect you?",
+        "options": [
+            "A. Improves credit score",
+            "B. Reduces interest rate",
+            "C. Results in fees or penalties",
+            "D. Increases credit limit"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! Exceeding your credit limit can lead to fees or penalties.",
+        "incorrect-message": "Incorrect. The correct answer is C. Going over your credit limit may result in penalties."
+    },
+    {
+        "background": "Understanding how student loan repayments are structured helps with financial planning.",
+        "question": "At what percentage of income do UK student loan repayments begin for Plan 2?",
+        "options": [
+            "A. 5%",
+            "B. 7%",
+            "C. 9%",
+            "D. 12%"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! Plan 2 repayments begin at 9% of income over the threshold.",
+        "incorrect-message": "Incorrect. The correct answer is C. Plan 2 loans require 9% repayment over the threshold."
+    },
+    {
+        "background": "Credit history affects borrowing ability and financial health.",
+        "question": "Which action can harm your credit score?",
+        "options": [
+            "A. Paying bills on time",
+            "B. Keeping credit utilization low",
+            "C. Frequently applying for credit",
+            "D. Having no credit history"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! Frequent credit applications can negatively impact your score.",
+        "incorrect-message": "Incorrect. The correct answer is C. Applying frequently for credit may harm your score."
+    },
+    {
+        "background": "Understanding tax on savings helps UK residents manage net returns on interest.",
+        "question": "What is the annual personal savings allowance for basic-rate taxpayers?",
+        "options": [
+            "A. £100",
+            "B. £500",
+            "C. £1,000",
+            "D. £1,500"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! Basic-rate taxpayers have a £1,000 personal savings allowance.",
+        "incorrect-message": "Incorrect. The correct answer is C. Basic-rate taxpayers have a £1,000 allowance."
+    },
+    {
+        "background": "Interest rates on loans vary based on loan type and borrower profile.",
+        "question": "Which factor can lead to a higher interest rate on a loan?",
+        "options": [
+            "A. High credit score",
+            "B. Low income",
+            "C. Short loan term",
+            "D. No outstanding debts"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! Low income may result in a higher interest rate.",
+        "incorrect-message": "Incorrect. The correct answer is B. Lower income may increase perceived risk, raising interest rates."
+    },
+    {
+        "background": "Understanding credit rating ranges can help manage credit goals.",
+        "question": "Which range represents an excellent credit score in the UK?",
+        "options": [
+            "A. 300-499",
+            "B. 500-699",
+            "C. 700-799",
+            "D. 800-999"
+        ],
+        "answer": "D",
+        "correct-message": "Correct! A score of 800-999 is generally considered excellent in the UK.",
+        "incorrect-message": "Incorrect. The correct answer is D. Scores in the 800-999 range are excellent."
+    }
+]
+
+
+[
+    {
+        "background": "Understanding credit scores in the UK can help individuals manage finances and improve loan eligibility.",
+        "question": "Which of the following factors most significantly impacts your credit score in the UK?",
+        "options": [
+            "A. Frequency of bank transactions",
+            "B. Timely repayment of credit obligations",
+            "C. The amount of money in savings",
+            "D. Annual income"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! Consistently repaying credit on time is one of the most crucial factors in maintaining a strong credit score.",
+        "incorrect-message": "Incorrect. The correct answer is B. Timely repayment of credit obligations is key to building a solid credit score."
+    },
+    {
+        "background": "Student loans in the UK function differently from traditional loans, with repayment based on income rather than fixed monthly amounts.",
+        "question": "When do UK graduates begin repaying their student loan?",
+        "options": [
+            "A. As soon as they graduate",
+            "B. Once they earn above a specific income threshold",
+            "C. After one year of employment",
+            "D. When they reach 30 years old"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! UK graduates begin repaying their student loans only once their income exceeds a set threshold.",
+        "incorrect-message": "Incorrect. The correct answer is B. Repayments start only after graduates earn above a specific income level."
+    },
+    {
+        "background": "Savings accounts offer different interest rates based on accessibility and type.",
+        "question": "Which type of savings account typically offers the highest interest rate but limits access to funds?",
+        "options": [
+            "A. Easy access savings account",
+            "B. Current account",
+            "C. Fixed-rate bond",
+            "D. ISA (Individual Savings Account)"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! Fixed-rate bonds usually offer higher interest rates but restrict access to funds for a set period.",
+        "incorrect-message": "Incorrect. The correct answer is C. Fixed-rate bonds tend to provide higher rates, though they limit access to funds."
+    },
+    {
+        "background": "Student loan interest rates in the UK can vary based on the borrower's earnings.",
+        "question": "How is the interest rate on UK student loans calculated after graduation?",
+        "options": [
+            "A. Fixed rate set annually",
+            "B. Based on the retail price index (RPI) and income",
+            "C. Percentage of total loan amount",
+            "D. Based solely on the Bank of England base rate"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! The UK student loan interest rate is based on the RPI and the graduate's income.",
+        "incorrect-message": "Incorrect. The correct answer is B. UK student loan interest depends on the RPI and income after graduation."
+    },
+    {
+        "background": "Credit utilization is a factor that affects credit scores in the UK.",
+        "question": "What is an ideal credit utilization ratio for maintaining a good credit score?",
+        "options": [
+            "A. 0%",
+            "B. 30% or less",
+            "C. 50% or less",
+            "D. 75% or more"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! A utilization ratio of 30% or lower is generally recommended for a healthy credit score.",
+        "incorrect-message": "Incorrect. The correct answer is B. Ideally, credit utilization should be kept at 30% or less."
+    },
+    {
+        "background": "Understanding types of bank accounts can help maximize interest or reduce fees.",
+        "question": "Which account type typically does not offer interest but is commonly used for daily transactions?",
+        "options": [
+            "A. Easy access savings account",
+            "B. Fixed-rate bond",
+            "C. ISA",
+            "D. Current account"
+        ],
+        "answer": "D",
+        "correct-message": "Correct! Current accounts are usually used for transactions and often do not offer interest.",
+        "incorrect-message": "Incorrect. The correct answer is D. Current accounts are mainly for transactions, not interest."
+    },
+    {
+        "background": "Knowing how credit scores work can help people plan and improve their credit history.",
+        "question": "What impact does frequently applying for credit have on your credit score?",
+        "options": [
+            "A. It has no effect",
+            "B. It increases the score",
+            "C. It may lower the score",
+            "D. It is beneficial to your score"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! Frequent credit applications can lower your score, as it suggests potential financial distress.",
+        "incorrect-message": "Incorrect. The correct answer is C. Applying frequently for credit can negatively affect your score."
+    },
+    {
+        "background": "In the UK, different accounts have different rules for tax-exempt interest.",
+        "question": "Which savings account type allows tax-free interest earnings?",
+        "options": [
+            "A. Regular savings account",
+            "B. Fixed-rate bond",
+            "C. ISA",
+            "D. Current account"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! ISAs offer tax-free interest earnings in the UK.",
+        "incorrect-message": "Incorrect. The correct answer is C. ISAs allow individuals to earn interest without paying tax on it."
+    },
+    {
+        "background": "Credit scores can be influenced by certain actions or financial behaviors.",
+        "question": "How often should you check your credit report to ensure accuracy?",
+        "options": [
+            "A. Once a week",
+            "B. Every six months",
+            "C. Once a year",
+            "D. Every five years"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! It's a good practice to check your credit report once a year to catch any errors.",
+        "incorrect-message": "Incorrect. The correct answer is C. Checking your report annually helps maintain accurate records."
+    },
+    {
+        "background": "Some savings accounts offer a government bonus as an incentive to save for certain goals.",
+        "question": "Which UK savings account offers a government bonus for first-time home buyers?",
+        "options": [
+            "A. Easy access savings account",
+            "B. Lifetime ISA",
+            "C. Fixed-rate bond",
+            "D. Current account"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! A Lifetime ISA offers a government bonus for first-time home purchases.",
+        "incorrect-message": "Incorrect. The correct answer is B. A Lifetime ISA provides a government bonus to help first-time buyers."
+    },
+    {
+        "background": "The credit card balance type affects the interest charged if not paid in full each month.",
+        "question": "If you do not pay off your credit card in full, what is the most likely consequence?",
+        "options": [
+            "A. Your balance is waived",
+            "B. Interest is charged on the balance",
+            "C. No additional charges apply",
+            "D. Your credit score automatically improves"
+        ],
+        "answer": "B",
+        "correct-message": "Correct! If you carry a balance, interest is charged on it.",
+        "incorrect-message": "Incorrect. The correct answer is B. Interest is charged if you do not pay off the balance in full."
+    },
+    {
+        "background": "There are thresholds for UK student loan repayments based on income levels.",
+        "question": "What is the income threshold for UK graduates to start repaying Plan 2 student loans?",
+        "options": [
+            "A. £10,000",
+            "B. £15,000",
+            "C. £25,000",
+            "D. £27,295"
+        ],
+        "answer": "D",
+        "correct-message": "Correct! The threshold is £27,295 for Plan 2 loans.",
+        "incorrect-message": "Incorrect. The correct answer is D. Plan 2 loan repayments start at £27,295."
+    },
+    {
+        "background": "The Annual Percentage Rate (APR) is an important measure for comparing loan costs.",
+        "question": "What does APR represent?",
+        "options": [
+            "A. Average Payment Rate",
+            "B. Annual Payment Return",
+            "C. Annual Percentage Rate",
+            "D. Accumulated Percentage Rate"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! APR stands for Annual Percentage Rate, indicating the cost of borrowing.",
+        "incorrect-message": "Incorrect. The correct answer is C. APR is the Annual Percentage Rate."
+    },
+    {
+        "background": "Credit card limits depend on creditworthiness and payment history.",
+        "question": "What determines the credit limit offered by credit card companies?",
+        "options": [
+            "A. Age",
+            "B. Account type",
+            "C. Credit score and income",
+            "D. Number of bank accounts"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! Credit scores and income are key factors in setting credit limits.",
+        "incorrect-message": "Incorrect. The correct answer is C. Credit limit depends on your score and income."
+    },
+    {
+        "background": "Understanding how interest works helps in managing loan repayments.",
+        "question": "How often is interest typically compounded for UK student loans?",
+        "options": [
+            "A. Annually",
+            "B. Monthly",
+            "C. Quarterly",
+            "D. Daily"
+        ],
+        "answer": "D",
+        "correct-message": "Correct! UK student loan interest compounds daily.",
+        "incorrect-message": "Incorrect. The correct answer is D. Student loan interest is compounded daily."
+    },
+    {
+        "background": "Mortgage affordability is assessed by lenders to determine how much a borrower can repay.",
+        "question": "How do UK lenders typically determine mortgage affordability?",
+        "options": [
+            "A. By considering only the property value",
+            "B. By using a fixed percentage of borrower income",
+            "C. By assessing income and expenses",
+            "D. By evaluating borrower’s net worth"
+        ],
+        "answer": "C",
+        "correct-message": "Correct! Lenders assess income and expenses to determine mortgage affordability.",
+        "incorrect-message": "Incorrect. The correct answer is C. Mortgage affordability is based on income and expenses."
+    }
+]
