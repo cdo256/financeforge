@@ -23,6 +23,17 @@ print(db)
 def make_message(message):
     return jsonify({"message": message})
 
+def doc_to_json(document):
+    obj = {}
+    for key in document:
+        if key == '_id':
+            obj['id'] = str(document[key])
+        elif key == 'password':
+            pass
+        else:
+            obj[key] = document[key]
+    return obj
+
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -43,34 +54,41 @@ def signup():
         return make_message("User already exists"), 400
 
     hashed_password = generate_password_hash(password)
-    users_collection.insert_one({
+    user_info = {
         "username": username,
         "password": hashed_password,
+        "name": name,
         "points": 0,
         "level": 0,
         "progress_percentage": 0
-    })
+    }
+    users_collection.insert_one(user_info)
     access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token), 200
-
-    return make_message("User created successfully"), 201
-
+    return jsonify(
+        access_token=access_token, 
+        user_info=user_info
+    ), 200
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-
+    print(username)
     if not username:
         return make_message("Parameter 'username' missing"), 400
     if not password:
         return make_message("Parameter 'password' missing"), 400
     
     user = users_collection.find_one({"username": username})
+
+    print(user)
     if user and check_password_hash(user['password'], password):
         access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token), 200
+        return jsonify(
+            access_token=access_token,
+            user_info=doc_to_json(user)
+        ), 200
 
     return make_message("Invalid credentials"), 401
 
@@ -258,4 +276,4 @@ def get_progress():
     return message("User not found"), 404
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=81)
+    app.run(host='0.0.0.0', port=4000)
