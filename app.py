@@ -91,7 +91,7 @@ def login():
 def submit_quiz(topic_id, subtopic_id):
     current_user = get_jwt_identity()
     data = request.get_json()
-    user_answers = data.get("answers")  # Expecting answers in the format: {"question_id": "selected_option"}
+    user_answers = {int(k): v for k, v in data.get("answers", {}).items()}  # Expecting answers in the format: {"question_id": "selected_option"}
 
     # Step 1: Calculate score for the quiz
     new_score = calculate_quiz_score(topic_id, subtopic_id, user_answers)
@@ -104,7 +104,7 @@ def submit_quiz(topic_id, subtopic_id):
 
     # Step 4: Update user level and progress percentage if topic is completed
     if topic_completed:
-        update_user_level_and_progress(current_user, topic_id)
+        update_user_level_and_progress(current_user)
         return jsonify({
             "message": f"{message} Topic completed!",
             "new_score": new_score,
@@ -125,14 +125,15 @@ def calculate_quiz_score(topic_id, subtopic_id, user_answers):
     subtopic = subtopics_collection.find_one({"topic_id": topic_id, "subtopic_id": subtopic_id})
     quiz = subtopic["quiz"]
     score = 0
+    
+    quiz_dict = {q["question_id"]: q for q in quiz}
 
     # Calculate score based on correct answers
-    for question in quiz:
-        question_id = question["question"]
-        correct_option = question["correct_option"]
-        points = question["points"]
-        if user_answers.get(question_id) == correct_option:
-            score += points
+    for question_id, user_answer in user_answers.items():
+        question = quiz_dict.get(question_id) 
+        if question and user_answer == question["correct_option"]:
+            score += question["points"]
+
     return score
 
 
@@ -229,7 +230,7 @@ def update_user_level_and_progress(username):
 
     # Calculate the user's progress percentage
     if total_subtopics > 0:
-        progress_percentage = (completed_subtopics / total_subtopics) * 100
+        progress_percentage = ":.2f".format((completed_subtopics / total_subtopics) * 100)
     else:
         progress_percentage = 0
 
