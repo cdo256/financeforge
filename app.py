@@ -281,9 +281,9 @@ def get_progress():
 def get_topics():
     topics = topics_collection.find({}, {"_id": 0, "topic_id": 1, "name": 1})
     topics_list = list(topics)
+    print(topics_list)
     
     return jsonify(topics_list), 200
-
 
 @app.route('/topics/<int:topic_id>/subtopics', methods=['GET'])
 def get_subtopics(topic_id):
@@ -318,7 +318,7 @@ def get_subtopics(topic_id):
         "topic_id": topic_id,
         "min_score": topic["min_score"],
         "subtopics": subtopics_list,
-        "questions": quiz
+        "questions": quiz_list
     }
     
     return jsonify(response), 200
