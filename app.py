@@ -318,7 +318,7 @@ def get_subtopics(topic_id):
         "topic_id": topic_id,
         "min_score": topic["min_score"],
         "subtopics": subtopics_list,
-        
+        "questions": quiz
     }
     
     return jsonify(response), 200
