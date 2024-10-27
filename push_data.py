@@ -1,14 +1,64 @@
 topics_data = [
-    {"topic_id": 1, "name": "Budgeting Basics", "min_score": 20},
-    {"topic_id": 2, "name": "Saving Strategies", "min_score": 25},
-    {"topic_id": 3, "name": "Understanding Credit", "min_score": 30},
-    {"topic_id": 4, "name": "Investing Fundamentals", "min_score": 40},
-    {"topic_id": 5, "name": "Retirement Planning", "min_score": 35},
-    {"topic_id": 6, "name": "Insurance Basics", "min_score": 30},
-    {"topic_id": 7, "name": "Taxes and Tax Filing", "min_score": 20},
-    {"topic_id": 8, "name": "Debt Management", "min_score": 30},
-    {"topic_id": 9, "name": "Home Buying Guide", "min_score": 40},
-    {"topic_id": 10, "name": "Financial Goal Setting", "min_score": 15}
+    {
+        "topic_id": 1,
+        "name": "Budgeting Basics",
+        "min_score": 20,
+        "description": "Learn the fundamentals of budgeting, including how to track expenses, create a monthly budget, and set spending limits."
+    },
+    {
+        "topic_id": 2,
+        "name": "Saving Strategies",
+        "min_score": 25,
+        "description": "Explore effective ways to save money, from automating savings to creating an emergency fund and setting financial priorities."
+    },
+    {
+        "topic_id": 3,
+        "name": "Understanding Credit",
+        "min_score": 30,
+        "description": "Gain insights into credit scores, credit reports, and how credit impacts financial opportunities, plus strategies for managing and improving credit."
+    },
+    {
+        "topic_id": 4,
+        "name": "Investing Fundamentals",
+        "min_score": 40,
+        "description": "An introduction to investment basics, covering types of investments, risk management, and building a diversified portfolio for long-term growth."
+    },
+    {
+        "topic_id": 5,
+        "name": "Retirement Planning",
+        "min_score": 35,
+        "description": "Learn the importance of planning for retirement, including types of retirement accounts, contribution strategies, and assessing retirement goals."
+    },
+    {
+        "topic_id": 6,
+        "name": "Insurance Basics",
+        "min_score": 30,
+        "description": "Understand the different types of insurance, including health, life, and auto insurance, and how to choose coverage that fits your needs."
+    },
+    {
+        "topic_id": 7,
+        "name": "Taxes and Tax Filing",
+        "min_score": 20,
+        "description": "Get a handle on taxes with a guide to tax filing, deductions, credits, and tips for maximizing refunds and minimizing tax liabilities."
+    },
+    {
+        "topic_id": 8,
+        "name": "Debt Management",
+        "min_score": 30,
+        "description": "Learn strategies for managing debt, paying off loans, consolidating debt, and improving financial stability by reducing liabilities."
+    },
+    {
+        "topic_id": 9,
+        "name": "Home Buying Guide",
+        "min_score": 40,
+        "description": "A comprehensive guide to the home-buying process, including mortgage options, saving for a down payment, and tips for navigating real estate."
+    },
+    {
+        "topic_id": 10,
+        "name": "Financial Goal Setting",
+        "min_score": 15,
+        "description": "Set meaningful financial goals by learning how to prioritize, track progress, and stay motivated in achieving financial milestones."
+    }
 ]
 
 subtopics_data = [
@@ -219,7 +269,8 @@ db = client['financeforge']
 
 # Insert topics data into topics collection
 topics_collection = db['topics']
-# topics_collection.insert_many(topics_data)
+topics_collection.delete_many({})
+topics_collection.insert_many(topics_data)
 
 # Insert subtopics data into subtopics collection
 subtopics_collection = db['subtopics']

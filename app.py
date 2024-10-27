@@ -279,9 +279,8 @@ def get_progress():
 
 @app.route('/topics', methods=['GET'])
 def get_topics():
-    topics = topics_collection.find({}, {"_id": 0, "topic_id": 1, "name": 1})
+    topics = topics_collection.find({}, {"_id": 0, "topic_id": 1, "name": 1, "description": 1})
     topics_list = list(topics)
-    print(topics_list)
     
     return jsonify(topics_list), 200
 
