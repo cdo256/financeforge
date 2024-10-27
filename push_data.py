@@ -207,6 +207,8 @@ subtopics_data = [
      ]}
 ]
 
+img_url = "https://unsplash.com/photos/a-computer-generated-image-of-a-purple-object-8Pm_A-OHJGg"
+
 
 from pymongo import MongoClient
 
@@ -217,8 +219,13 @@ db = client['financeforge']
 
 # Insert topics data into topics collection
 topics_collection = db['topics']
-topics_collection.insert_many(topics_data)
+# topics_collection.insert_many(topics_data)
 
 # Insert subtopics data into subtopics collection
 subtopics_collection = db['subtopics']
-subtopics_collection.insert_many(subtopics_data)
+# subtopics_collection.insert_many(subtopics_data)
+# subtopics_collection.update_many(
+#     {}, 
+#     {"$set": {"img_url": img_url}}
+# )
+
