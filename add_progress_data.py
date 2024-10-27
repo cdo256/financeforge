@@ -9,6 +9,7 @@ users_collection = db['users']
 progress_collection = db['progress']
 subtopics_collection = db['subtopics']
 
+# Dummy users with details
 dummy_users = [
     {"username": "alice@example.com", "password": "alice123", "name": "Alice Walker"},
     {"username": "bob@example.com", "password": "bob123", "name": "Bob Martin"},
@@ -17,30 +18,46 @@ dummy_users = [
     {"username": "eve@example.com", "password": "eve123", "name": "Eve Brown"},
     {"username": "frank@example.com", "password": "frank123", "name": "Frank Reed"},
     {"username": "grace@example.com", "password": "grace123", "name": "Grace Hall"},
-    {"username": "henry@example.com", "password": "henry123", "name": "Henry Clark"}
+    {"username": "henry@example.com", "password": "henry123", "name": "Henry Clark"},
+    {"username": "ivan@example.com", "password": "ivan123", "name": "Ivan Davis"},
+    {"username": "julia@example.com", "password": "julia123", "name": "Julia Wilson"},
+    {"username": "kate@example.com", "password": "kate123", "name": "Kate Miller"},
+    {"username": "liam@example.com", "password": "liam123", "name": "Liam Taylor"},
+    {"username": "mike@example.com", "password": "mike123", "name": "Mike Anderson"},
+    {"username": "nina@example.com", "password": "nina123", "name": "Nina Martinez"},
+    {"username": "olivia@example.com", "password": "olivia123", "name": "Olivia Thomas"},
+    {"username": "peter@example.com", "password": "peter123", "name": "Peter Harris"},
+    {"username": "quinn@example.com", "password": "quinn123", "name": "Quinn Walker"},
+    {"username": "rachel@example.com", "password": "rachel123", "name": "Rachel Scott"},
+    {"username": "sam@example.com", "password": "sam123", "name": "Sam Wilson"},
+    {"username": "tina@example.com", "password": "tina123", "name": "Tina Anderson"},
 ]
 
 users_data = [
-    {"username": "alice@example.com", "score": 10, "topic_id": 1, "subtopic_id": 2},
-    {"username": "bob@example.com", "score": 15, "topic_id": 2, "subtopic_id": 3},
-    {"username": "carol@example.com", "score": 20, "topic_id": 3, "subtopic_id": 4},
-    {"username": "david@example.com", "score": 5, "topic_id": 1, "subtopic_id": 1},
-    {"username": "eve@example.com", "score": 12, "topic_id": 2, "subtopic_id": 2},
-    {"username": "frank@example.com", "score": 8, "topic_id": 1, "subtopic_id": 3},
-    {"username": "grace@example.com", "score": 18, "topic_id": 3, "subtopic_id": 1},
-    {"username": "henry@example.com", "score": 7, "topic_id": 2, "subtopic_id": 4},
-    {"username": "ivan@example.com", "score": 25, "topic_id": 1, "subtopic_id": 5},
-    {"username": "julia@example.com", "score": 30, "topic_id": 3, "subtopic_id": 2},
-    {"username": "kate@example.com", "score": 11, "topic_id": 2, "subtopic_id": 1},
-    {"username": "liam@example.com", "score": 14, "topic_id": 1, "subtopic_id": 4},
-    {"username": "mike@example.com", "score": 9, "topic_id": 3, "subtopic_id": 3},
-    {"username": "nina@example.com", "score": 6, "topic_id": 2, "subtopic_id": 5},
-    {"username": "oliver@example.com", "score": 20, "topic_id": 1, "subtopic_id": 6},
-    {"username": "peter@example.com", "score": 13, "topic_id": 3, "subtopic_id": 6},
-    {"username": "quincy@example.com", "score": 17, "topic_id": 2, "subtopic_id": 6},
-    {"username": "rachel@example.com", "score": 19, "topic_id": 3, "subtopic_id": 7},
-    {"username": "steve@example.com", "score": 16, "topic_id": 1, "subtopic_id": 8},
-    {"username": "tina@example.com", "score": 22, "topic_id": 2, "subtopic_id": 8}
+    {"username": "alice@example.com", "score": 110, "topic_id": 1, "subtopic_id": 2},
+    {"username": "alice@example.com", "score": 115, "topic_id": 1, "subtopic_id": 3},
+    {"username": "bob@example.com", "score": 200, "topic_id": 2, "subtopic_id": 1},
+    {"username": "bob@example.com", "score": 115, "topic_id": 2, "subtopic_id": 2},
+    {"username": "carol@example.com", "score": 129, "topic_id": 3, "subtopic_id": 3},
+    {"username": "carol@example.com", "score": 80, "topic_id": 3, "subtopic_id": 4},
+    {"username": "david@example.com", "score": 180, "topic_id": 1, "subtopic_id": 1},
+    {"username": "david@example.com", "score": 370, "topic_id": 1, "subtopic_id": 4},
+    {"username": "eve@example.com", "score": 325, "topic_id": 2, "subtopic_id": 5},
+    {"username": "frank@example.com", "score": 130, "topic_id": 3, "subtopic_id": 2},
+    {"username": "grace@example.com", "score": 141, "topic_id": 2, "subtopic_id": 6},
+    {"username": "henry@example.com", "score": 144, "topic_id": 1, "subtopic_id": 5},
+    {"username": "ivan@example.com", "score": 90, "topic_id": 3, "subtopic_id": 3},
+    {"username": "julia@example.com", "score": 126, "topic_id": 2, "subtopic_id": 4},
+    {"username": "kate@example.com", "score": 113, "topic_id": 2, "subtopic_id": 7},
+    {"username": "liam@example.com", "score": 219, "topic_id": 3, "subtopic_id": 6},
+    {"username": "mike@example.com", "score": 222, "topic_id": 1, "subtopic_id": 6},
+    {"username": "nina@example.com", "score": 145, "topic_id": 1, "subtopic_id": 7},
+    {"username": "olivia@example.com", "score": 170, "topic_id": 2, "subtopic_id": 8},
+    {"username": "peter@example.com", "score": 20, "topic_id": 3, "subtopic_id": 1},
+    {"username": "quinn@example.com", "score": 17, "topic_id": 1, "subtopic_id": 8},
+    {"username": "rachel@example.com", "score": 16, "topic_id": 3, "subtopic_id": 5},
+    {"username": "sam@example.com", "score": 18, "topic_id": 2, "subtopic_id": 1},
+    {"username": "tina@example.com", "score": 12, "topic_id": 2, "subtopic_id": 3},
 ]
 
 
