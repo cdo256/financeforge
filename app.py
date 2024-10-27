@@ -92,8 +92,7 @@ def login():
 def submit_quiz(topic_id, subtopic_id):
     current_user = get_jwt_identity()
     data = request.get_json()
-    question = data.get("quesiton")
-    user_answer = data.get("answer")
+    user_answers = {int(k): v for k, v in data.get("answers", {}).items()}  # Expecting answers in the format: {"question_id": "selected_option"}
 
     # Step 1: Calculate score for the quiz
     new_score = calculate_quiz_score(topic_id, subtopic_id, user_answers)
