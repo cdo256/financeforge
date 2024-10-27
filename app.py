@@ -10,15 +10,12 @@ app.config['JWT_SECRET_KEY'] = "9E:&Kt]c}VbK"
 app.config['DATABASE_URL'] = "mongodb+srv://devansh88karia:wrQ02Ifp0FfTLZB7@cluster0.pzrjg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 jwt = JWTManager(app)
 
-database_url = app.config['DATABASE_URL']
-client = MongoClient(database_url)
+client = MongoClient(app.config['DATABASE_URL'])
 db = client['financeforge']
 users_collection = db['users']
 progress_collection = db['progress']
 topics_collection = db['topics']
 subtopics_collection = db['subtopics']
-print(f'Connecting to DB: {database_url}')
-print(db)
 
 def make_message(message):
     return jsonify({"message": message})
@@ -40,8 +37,6 @@ def signup():
     username = data.get('username')
     password = data.get('password')
     name = data.get('name')
-
-    print(f'SIGNUP:\nusername: {username}\npassword: {password}\nname: {name}')
 
     if not username:
         return make_message("Parameter 'username' missing"), 400
@@ -74,15 +69,13 @@ def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-    print(username)
+
     if not username:
         return make_message("Parameter 'username' missing"), 400
     if not password:
         return make_message("Parameter 'password' missing"), 400
     
     user = users_collection.find_one({"username": username})
-
-    print(user)
     if user and check_password_hash(user['password'], password):
         access_token = create_access_token(identity=username)
         return jsonify(
@@ -273,7 +266,7 @@ def get_progress():
             "level": user['level'],
             "progress_percentage": user['progress_percentage']
         }), 200
-    return message("User not found"), 404
+    return jsonify("User not found"), 404
 
 
 @app.route('/topics', methods=['GET'])
