@@ -6,8 +6,8 @@ import datetime
 import os
 
 app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
-app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL')
+app.config['JWT_SECRET_KEY'] = "9E:&Kt]c}VbK"
+app.config['DATABASE_URL'] = "mongodb+srv://devansh88karia:wrQ02Ifp0FfTLZB7@cluster0.pzrjg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 jwt = JWTManager(app)
 
 client = MongoClient(app.config['DATABASE_URL'])
@@ -31,7 +31,8 @@ def signup():
         "username": username,
         "password": hashed_password,
         "points": 0,
-        "current_level": 1
+        "level": 0,
+        "progress_percentage": 0
     })
 
     return jsonify({"message": "User created successfully"}), 201
@@ -222,9 +223,10 @@ def get_progress():
         return jsonify({
             "username": current_user,
             "points": user['points'],
-            "current_level": user['current_level']
+            "level": user['level'],
+            "progress_percentage": user['progress_percentage']
         }), 200
     return jsonify({"message": "User not found"}), 404
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8808)
