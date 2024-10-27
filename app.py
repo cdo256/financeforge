@@ -40,7 +40,7 @@ def signup():
         return make_message("Parameter 'name' missing"), 400
     
     if users_collection.find_one({"username": username}):
-        return make_message("User already exists"}), 400
+        return make_message("User already exists"), 400
 
     hashed_password = generate_password_hash(password)
     users_collection.insert_one({
