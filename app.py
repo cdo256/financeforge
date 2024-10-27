@@ -10,15 +10,12 @@ app.config['JWT_SECRET_KEY'] = "9E:&Kt]c}VbK"
 app.config['DATABASE_URL'] = "mongodb+srv://devansh88karia:wrQ02Ifp0FfTLZB7@cluster0.pzrjg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 jwt = JWTManager(app)
 
-database_url = app.config['DATABASE_URL']
-client = MongoClient(database_url)
+client = MongoClient(app.config['DATABASE_URL'])
 db = client['financeforge']
 users_collection = db['users']
 progress_collection = db['progress']
 topics_collection = db['topics']
 subtopics_collection = db['subtopics']
-print(f'Connecting to DB: {database_url}')
-print(db)
 
 def make_message(message):
     return jsonify({"message": message})
@@ -40,8 +37,6 @@ def signup():
     username = data.get('username')
     password = data.get('password')
     name = data.get('name')
-
-    print(f'SIGNUP:\nusername: {username}\npassword: {password}\nname: {name}')
 
     if not username:
         return make_message("Parameter 'username' missing"), 400
@@ -75,15 +70,13 @@ def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-    print(username)
+
     if not username:
         return make_message("Parameter 'username' missing"), 400
     if not password:
         return make_message("Parameter 'password' missing"), 400
     
     user = users_collection.find_one({"username": username})
-
-    print(user)
     if user and check_password_hash(user['password'], password):
         access_token = create_access_token(identity=username)
         return jsonify(
@@ -274,7 +267,72 @@ def get_progress():
             "level": user['level'],
             "progress_percentage": user['progress_percentage']
         }), 200
-    return message("User not found"), 404
+    return make_message("User not found"), 404
+
+@app.route('/topics', methods=['GET'])
+def get_topics():
+    topics = topics_collection.find({}, {"_id": 0, "topic_id": 1, "name": 1})
+    topics_list = list(topics)
+    
+    return jsonify(topics_list), 200
+
+
+@app.route('/topics/<int:topic_id>/subtopics', methods=['GET'])
+def get_subtopics(topic_id):
+    # Fetch the minimum score for the given topic from the topics collection
+    topic = topics_collection.find_one({"topic_id": topic_id}, {"_id": 0, "min_score": 1})
+    
+    if not topic:
+        return jsonify({"message": "Topic not found"}), 404
+    
+    # Fetch all subtopics for the given topic_id
+    subtopics = subtopics_collection.find({"topic_id": topic_id}, {"_id": 0, "subtopic_id": 1, "name": 1})
+
+    # Convert the cursor to a list of dictionaries and include the min_score in each entry
+    subtopics_list = list(subtopics)
+    
+    # Add the min_score from the topic to the response
+    response = {
+        "topic_id": topic_id,
+        "min_score": topic["min_score"],
+        "subtopics": subtopics_list
+    }
+    
+    return jsonify(response), 200
+
+
+@app.route('/topics/<int:topic_id>/subtopics/<int:subtopic_id>', methods=['GET'])
+def get_subtopic_details(topic_id, subtopic_id):
+    # Fetch the specific subtopic by topic_id and subtopic_id
+    subtopic = subtopics_collection.find_one(
+        {"topic_id": topic_id, "subtopic_id": subtopic_id},
+        {"_id": 0, "name": 1, "content": 1, "quiz": 1}
+    )
+    
+    # Check if the subtopic exists
+    if not subtopic:
+        return jsonify({"message": "Subtopic not found"}), 404
+    
+    # Format the quiz to include only question_id, question, and options
+    formatted_quiz = [
+        {
+            "question_id": q.get("question_id"),  # Assign a question_id if not already present
+            "question": q.get("question"),
+            "options": q.get("options")
+        }
+        for q in subtopic["quiz"]
+    ]
+    
+    # Construct the response
+    response = {
+        "subtopic_id": subtopic_id,
+        "name": subtopic["name"],
+        "content": subtopic["content"],
+        "quiz": formatted_quiz
+    }
+    
+    return jsonify(response), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4000)
