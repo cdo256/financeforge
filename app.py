@@ -267,6 +267,7 @@ def get_progress():
             "level": user['level'],
             "progress_percentage": user['progress_percentage']
         }), 200
+
     return make_message("User not found"), 404
 
 @app.route('/topics', methods=['GET'])
