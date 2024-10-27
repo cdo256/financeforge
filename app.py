@@ -55,7 +55,6 @@ def signup():
         "password": hashed_password,
         "name": name,
         "points": 0,
-        "level": 0,
         "progress_percentage": 0
     }
     users_collection.insert_one(user_info)
@@ -231,7 +230,7 @@ def update_user_level_and_progress(username):
 
     # Calculate the user's progress percentage
     if total_subtopics > 0:
-        progress_percentage = ":.2f".format((completed_subtopics / total_subtopics) * 100)
+        progress_percentage = "{:.2f}".format((completed_subtopics / total_subtopics) * 100)
     else:
         progress_percentage = 0
 
@@ -241,25 +240,6 @@ def update_user_level_and_progress(username):
         {"$set": {"progress_percentage": progress_percentage}}
     )
 
-    # Determine user level based on the number of completed topics
-    completed_topics = len(set(progress["topic_id"] for progress in progress_collection.find({"username": username})))
-    users_collection.update_one(
-        {"username": username},
-        {"$set": {"level": completed_topics}}
-    )
-
-
-
-@app.route('/questions', methods=['GET'])
-@jwt_required()
-def get_questions():
-    current_user = get_jwt_identity()
-    user = users_collection.find_one({"username": current_user})
-    print(f'GET QUESTIONS\nusername: {user}')
-    with open('questions.txt', 'r') as file:
-        data = json.load(file)
-    print(len(data))
-    return jsonify(data), 201
 
 @app.route('/progress', methods=['GET'])
 @jwt_required()
@@ -271,11 +251,11 @@ def get_progress():
         return jsonify({
             "username": current_user,
             "points": user['points'],
-            "level": user['level'],
             "progress_percentage": user['progress_percentage']
         }), 200
 
     return make_message("User not found"), 404
+
 
 @app.route('/topics', methods=['GET'])
 def get_topics():
@@ -283,6 +263,7 @@ def get_topics():
     topics_list = list(topics)
     
     return jsonify(topics_list), 200
+
 
 @app.route('/topics/<int:topic_id>/subtopics', methods=['GET'])
 def get_subtopics(topic_id):
@@ -354,6 +335,123 @@ def get_subtopic_details(topic_id, subtopic_id):
     }
     
     return jsonify(response), 200
+
+
+@app.route('/submit', methods=['POST'])
+@jwt_required()
+def submit_subtopic_quiz():
+    current_user = get_jwt_identity()
+    data = request.get_json()
+    type = data.get("type")
+    
+    if type == "subtopic":
+        topic_id = data.get("topic_id")
+        subtopic_id = data.get("subtopic_id")
+        
+        existing_progress = progress_collection.find_one({
+            "username": current_user,
+            "topic_id": topic_id,
+            "subtopic_id": subtopic_id
+        })
+        
+        if existing_progress:
+            return jsonify({"message": "Subtopic already completed"}), 200
+        
+        # Add 2 points for the subtopic and update progress
+        users_collection.update_one({"username": current_user}, {"$inc": {"points": 2}})
+        progress_collection.insert_one({
+            "username": current_user,
+            "topic_id": topic_id,
+            "subtopic_id": subtopic_id,
+            "score": 2,
+            "type": type,
+            "date": datetime.datetime.now()
+        })
+        update_progress_percentage(current_user)
+
+        return jsonify({"message": "Subtopic completed and score updated"}), 200
+        
+    elif type == "quiz":
+        topic_id = data.get("topic_id")
+        subtopic_id = data.get("subtopic_id")
+        question_id = data.get("question_id")
+        user_answer = data.get("answer")
+        
+        subtopic = subtopics_collection.find_one({"topic_id": topic_id, "subtopic_id": subtopic_id})
+        question = next((q for q in subtopic["quiz"] if q["question_id"] == question_id), None)
+        
+        if not question:
+            return jsonify({"message": "Question not found"}), 404
+
+        question_points = question["points"]
+        correct_option = question["correct_option"]
+        
+        if user_answer == correct_option:
+            new_score = question_points
+        else:
+            new_score = 0
+        
+        existing_progress = progress_collection.find_one({
+            "username": current_user,
+            "topic_id": topic_id,
+            "subtopic_id": subtopic_id,
+            "question_id": question_id
+        })
+
+        # Check if new score is higher and update if necessary
+        if existing_progress:
+            if new_score > existing_progress['score']:
+                points_to_add = new_score - existing_progress['score']
+                users_collection.update_one(
+                    {"username": current_user},
+                    {"$inc": {"points": points_to_add}}
+                )
+                progress_collection.update_one(
+                    {"username": current_user, "topic_id": topic_id, "subtopic_id": subtopic_id},
+                    {"$set": {"score": new_score, "date": datetime.datetime.now()}}
+                )
+                return jsonify({"message": "Score updated to new maximum!"}), 200
+            else:
+                return jsonify({"message": "Score not updated as it's not higher than the previous attempt."}), 200
+        else:
+            users_collection.update_one(
+                    {"username": current_user},
+                    {"$inc": {"points": new_score}}
+                )
+            progress_collection.insert_one({
+                "username": current_user,
+                "topic_id": topic_id,
+                "subtopic_id": subtopic_id,
+                "question_id": question_id,
+                "score": new_score,
+                "type": type,
+                "date": datetime.datetime.now()
+            }) 
+            return jsonify({"message": "Quiz completed and score added"}), 200   
+            
+    else:
+        return jsonify({"message": "Invalid request type"}), 400
+
+
+def update_progress_percentage(username):
+    total_subtopics = subtopics_collection.count_documents({})
+
+    # Calculate the number of subtopics the user has completed
+    completed_subtopics = progress_collection.count_documents({
+        "username": username,
+        "type": "subtopic"
+    })
+
+    if total_subtopics > 0:
+        progress_percentage = "{:.2f}".format((completed_subtopics / total_subtopics) * 100)
+    else:
+        progress_percentage = 0
+        
+    users_collection.update_one(
+        {"username": username},
+        {"$set": {"progress_percentage": progress_percentage}}
+    )
+
 
 port = 4000
 if os.environ.get('PORT'):
