@@ -20,16 +20,27 @@ subtopics_collection = db['subtopics']
 print(f'Connecting to DB: {database_url}')
 print(db)
 
+def make_message(message):
+    return jsonify({"message": message})
+
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
+    name = data.get('name')
 
-    print(f'SIGNUP:\nusername: {username}\npassword: {password}')
+    print(f'SIGNUP:\nusername: {username}\npassword: {password}\nname: {name}')
 
+    if not username:
+        return make_message("Parameter 'username' missing"), 400
+    if not password:
+        return make_message("Parameter 'password' missing"), 400
+    if not name:
+        return make_message("Parameter 'name' missing"), 400
+    
     if users_collection.find_one({"username": username}):
-        return jsonify({"message": "User already exists"}), 400
+        return make_message("User already exists"}), 400
 
     hashed_password = generate_password_hash(password)
     users_collection.insert_one({
@@ -38,8 +49,10 @@ def signup():
         "points": 0,
         "current_level": 1
     })
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token), 200
 
-    return jsonify({"message": "User created successfully"}), 201
+    return make_message("User created successfully"), 201
 
 
 @app.route('/login', methods=['POST'])
@@ -48,12 +61,17 @@ def login():
     username = data.get('username')
     password = data.get('password')
 
+    if not username:
+        return make_message("Parameter 'username' missing"), 400
+    if not password:
+        return make_message("Parameter 'password' missing"), 400
+    
     user = users_collection.find_one({"username": username})
     if user and check_password_hash(user['password'], password):
         access_token = create_access_token(identity=username)
         return jsonify(access_token=access_token), 200
 
-    return jsonify({"message": "Invalid credentials"}), 401
+    return make_message("Invalid credentials"), 401
 
 
 @app.route('/quiz/<int:topic_id>/<int:subtopic_id>', methods=['POST'])
@@ -216,6 +234,12 @@ def update_user_level_and_progress(username):
         {"$set": {"level": completed_topics}}
     )
 
+@app.route('/questions', methods=['GET'])
+@jwt_required()
+def get_questions():
+    current_user = get_jwt_identity()
+    user = users_collection.find_one({"username": current_user})
+    print(f'GET QUESTIONS\nusername: {user}')
 
 @app.route('/progress', methods=['GET'])
 @jwt_required()
@@ -229,7 +253,7 @@ def get_progress():
             "points": user['points'],
             "current_level": user['current_level']
         }), 200
-    return jsonify({"message": "User not found"}), 404
+    return message("User not found"), 404
 
 def run():
     app.run(host='0.0.0.0', port=81)
