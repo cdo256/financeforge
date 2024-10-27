@@ -294,9 +294,24 @@ def get_subtopics(topic_id):
     
     # Fetch all subtopics for the given topic_id
     subtopics = subtopics_collection.find({"topic_id": topic_id})
-    
-    # Convert the cursor to a list of dictionaries and include the min_score in each entry
-    subtopics_list = list(subtopics)
+    subtopics = list(subtopics)
+    subtopics_list = []
+    quiz_list = []
+    for subtopic in subtopics:
+        subtopics_list.append({
+            "title": subtopic['name'],
+            "description": subtopic['content'],
+            "id": subtopic['subtopic_id']
+        })
+        for quiz in subtopic['quiz']:
+            quiz_list.append({
+                'subtopic_id': subtopic['subtopic_id'],
+                'question_id': quiz['question_id'],
+                'question_text': quiz['question'],
+                'options': quiz['options'],
+                'correcit_option': quiz['correct_option'],
+                'points': quiz['points']
+            })
     
     # Add the min_score from the topic to the response
     response = {
