@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 import os
+import json
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = "9E:&Kt]c}VbK"
@@ -86,13 +87,13 @@ def login():
 
     return make_message("Invalid credentials"), 401
 
-
 @app.route('/quiz/<int:topic_id>/<int:subtopic_id>', methods=['POST'])
 @jwt_required()
 def submit_quiz(topic_id, subtopic_id):
     current_user = get_jwt_identity()
     data = request.get_json()
-    user_answers = data.get("answers")  # Expecting answers in the format: {"question_id": "selected_option"}
+    question = data.get("quesiton")
+    user_answers = data.get("answer")  # Expecting answers in the format: {"question_id": "selected_option"}
 
     # Step 1: Calculate score for the quiz
     new_score = calculate_quiz_score(topic_id, subtopic_id, user_answers)
@@ -247,12 +248,18 @@ def update_user_level_and_progress(username):
         {"$set": {"level": completed_topics}}
     )
 
+
+
 @app.route('/questions', methods=['GET'])
 @jwt_required()
 def get_questions():
     current_user = get_jwt_identity()
     user = users_collection.find_one({"username": current_user})
     print(f'GET QUESTIONS\nusername: {user}')
+    with open('questions.txt', 'r') as file:
+        data = json.load(file)
+    print(len(data))
+    return jsonify(data), 201
 
 @app.route('/progress', methods=['GET'])
 @jwt_required()
@@ -281,14 +288,13 @@ def get_topics():
 @app.route('/topics/<int:topic_id>/subtopics', methods=['GET'])
 def get_subtopics(topic_id):
     # Fetch the minimum score for the given topic from the topics collection
-    topic = topics_collection.find_one({"topic_id": topic_id}, {"_id": 0, "min_score": 1})
-    
+    topic = topics_collection.find_one({"topic_id": topic_id})
     if not topic:
         return jsonify({"message": "Topic not found"}), 404
     
     # Fetch all subtopics for the given topic_id
-    subtopics = subtopics_collection.find({"topic_id": topic_id}, {"_id": 0, "subtopic_id": 1, "name": 1})
-
+    subtopics = subtopics_collection.find({"topic_id": topic_id})
+    
     # Convert the cursor to a list of dictionaries and include the min_score in each entry
     subtopics_list = list(subtopics)
     
@@ -296,7 +302,8 @@ def get_subtopics(topic_id):
     response = {
         "topic_id": topic_id,
         "min_score": topic["min_score"],
-        "subtopics": subtopics_list
+        "subtopics": subtopics_list,
+        
     }
     
     return jsonify(response), 200
@@ -334,6 +341,5 @@ def get_subtopic_details(topic_id, subtopic_id):
     
     return jsonify(response), 200
 
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=4000)
+    app.run(host='0.0.0.0', port=81)

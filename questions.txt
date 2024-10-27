@@ -193,11 +193,7 @@
         "answer": "D",
         "correct-message": "Correct! A score of 800-999 is generally considered excellent in the UK.",
         "incorrect-message": "Incorrect. The correct answer is D. Scores in the 800-999 range are excellent."
-    }
-]
-
-
-[
+    },
     {
         "background": "Understanding credit scores in the UK can help individuals manage finances and improve loan eligibility.",
         "question": "Which of the following factors most significantly impacts your credit score in the UK?",
