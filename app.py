@@ -10,46 +10,87 @@ app.config['JWT_SECRET_KEY'] = "9E:&Kt]c}VbK"
 app.config['DATABASE_URL'] = "mongodb+srv://devansh88karia:wrQ02Ifp0FfTLZB7@cluster0.pzrjg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 jwt = JWTManager(app)
 
-client = MongoClient(app.config['DATABASE_URL'])
+database_url = app.config['DATABASE_URL']
+client = MongoClient(database_url)
 db = client['financeforge']
 users_collection = db['users']
 progress_collection = db['progress']
 topics_collection = db['topics']
 subtopics_collection = db['subtopics']
+print(f'Connecting to DB: {database_url}')
+print(db)
+
+def make_message(message):
+    return jsonify({"message": message})
+
+def doc_to_json(document):
+    obj = {}
+    for key in document:
+        if key == '_id':
+            obj['id'] = str(document[key])
+        elif key == 'password':
+            pass
+        else:
+            obj[key] = document[key]
+    return obj
 
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
+    name = data.get('name')
 
+    print(f'SIGNUP:\nusername: {username}\npassword: {password}\nname: {name}')
+
+    if not username:
+        return make_message("Parameter 'username' missing"), 400
+    if not password:
+        return make_message("Parameter 'password' missing"), 400
+    if not name:
+        return make_message("Parameter 'name' missing"), 400
+    
     if users_collection.find_one({"username": username}):
-        return jsonify({"message": "User already exists"}), 400
+        return make_message("User already exists"), 400
 
     hashed_password = generate_password_hash(password)
-    users_collection.insert_one({
+    user_info = {
         "username": username,
         "password": hashed_password,
+        "name": name,
         "points": 0,
         "level": 0,
         "progress_percentage": 0
-    })
-
-    return jsonify({"message": "User created successfully"}), 201
-
+    }
+    users_collection.insert_one(user_info)
+    access_token = create_access_token(identity=username)
+    return jsonify(
+        access_token=access_token, 
+        user_info=user_info
+    ), 200
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-
+    print(username)
+    if not username:
+        return make_message("Parameter 'username' missing"), 400
+    if not password:
+        return make_message("Parameter 'password' missing"), 400
+    
     user = users_collection.find_one({"username": username})
+
+    print(user)
     if user and check_password_hash(user['password'], password):
         access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token), 200
+        return jsonify(
+            access_token=access_token,
+            user_info=doc_to_json(user)
+        ), 200
 
-    return jsonify({"message": "Invalid credentials"}), 401
+    return make_message("Invalid credentials"), 401
 
 
 @app.route('/quiz/<int:topic_id>/<int:subtopic_id>', methods=['POST'])
@@ -212,6 +253,12 @@ def update_user_level_and_progress(username):
         {"$set": {"level": completed_topics}}
     )
 
+@app.route('/questions', methods=['GET'])
+@jwt_required()
+def get_questions():
+    current_user = get_jwt_identity()
+    user = users_collection.find_one({"username": current_user})
+    print(f'GET QUESTIONS\nusername: {user}')
 
 @app.route('/progress', methods=['GET'])
 @jwt_required()
@@ -226,7 +273,7 @@ def get_progress():
             "level": user['level'],
             "progress_percentage": user['progress_percentage']
         }), 200
-    return jsonify({"message": "User not found"}), 404
+    return message("User not found"), 404
 
 
 @app.route('/topics', methods=['GET'])
