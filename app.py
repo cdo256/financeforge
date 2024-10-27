@@ -309,7 +309,7 @@ def get_subtopics(topic_id):
                 'question_id': quiz['question_id'],
                 'question_text': quiz['question'],
                 'options': quiz['options'],
-                'correcit_option': quiz['correct_option'],
+                'correct_option': quiz['correct_option'],
                 'points': quiz['points']
             })
     
