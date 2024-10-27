@@ -341,5 +341,9 @@ def get_subtopic_details(topic_id, subtopic_id):
     
     return jsonify(response), 200
 
+port = 4000
+if os.environ.get('PORT'):
+    port = int(os.environ.get('PORT'))
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=81)
+    app.run(host='0.0.0.0', port=port)
