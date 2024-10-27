@@ -63,10 +63,11 @@ def signup():
         "progress_percentage": 0
     }
     users_collection.insert_one(user_info)
+    user_info = users_collection.find_one({"username": username})
     access_token = create_access_token(identity=username)
     return jsonify(
         access_token=access_token, 
-        user_info=user_info
+        user_info=doc_to_json(user_info)
     ), 200
 
 @app.route('/login', methods=['POST'])
@@ -276,4 +277,4 @@ def get_progress():
     return message("User not found"), 404
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=4000)
+    app.run(host='0.0.0.0', port=81)
