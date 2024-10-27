@@ -456,7 +456,7 @@ def update_progress_percentage(username):
 @app.route('/leaderboard', methods=['GET'])
 def get_leaderboard():
     limit = int(request.args.get("limit", 10)) 
-    users = users_collection.find({}, {"_id": 0, "username": 1, "score": 1}).sort("score", -1).limit(limit)
+    users = users_collection.find({}, {"_id": 0, "username": 1, "score": 1, "name": 1}).sort("score", -1).limit(limit)
     
     # Convert cursor to a list of dictionaries
     leaderboard = list(users)
